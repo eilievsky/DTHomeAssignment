@@ -34,6 +34,8 @@ def get_death_peak(args_dict):
     if coun_name == '':
         return json.dumps({"error":"No country defined"})
     coun_obj = co.Countries()
+    if coun_obj.get_slug_value(coun_name) == '':
+        return json.dumps({"error": f"No such countr {coun_name}"})
     covid_obj = cov.CovidData(country=coun_name, init_date=dt.datetime.now(), days_back=30, coun_obj=coun_obj)
     covid_obj.get_data()
     return json.dumps(covid_obj.get_max_death_record_formatted())
