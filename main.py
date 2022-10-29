@@ -1,17 +1,23 @@
-# This is a sample Python script.
+# main file. Contains Flask definition and endpoints
+from flask import Flask , request
+import appflow.flowfunctions as flowf
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+app = Flask(__name__)
+
+@app.route("/status")
+def get_status():
+    return flowf.get_status()
+
+@app.route("/deathsPeak")
+def get_death_peak():
+    args = request.args
+    print(args)
+    return flowf.get_death_peak(args_dict=args.to_dict())
+
+@app.route("/provinceConfirmedMax")
+def get_province_confirmed_max():
+    return flowf.get_province_confirmed_max()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-    print("this is second line")
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    app.run(debug=True)
